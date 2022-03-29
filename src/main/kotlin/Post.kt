@@ -1,5 +1,13 @@
+enum class PostType {
+    POST, COPY, REPLY, POSTPONE, SUGGEST
+}
+
+enum class EditMode {
+    ALL, DURATION
+}
+
 data class Post(
-    private val _id: UInt, // Идентификатор записи
+    val id: UInt, // Идентификатор записи
     val ownerId: UInt, // Идентификатор владельца стены, на которой размещена запись
     val fromID: UInt, // Идентификатор автора записи (от чьего имени опубликована запись)
     val createdBy: UInt, // Идентификатор администратора, который опубликовал запись (возвращается только для сообществ при запросе с ключом доступа администратора).
@@ -23,27 +31,56 @@ data class Post(
     val markedAsAds: Boolean = false, // Информация о том, содержит ли запись отметку «реклама»
     val isFavorite: Boolean = false, // true, если объект добавлен в закладки у текущего пользователя
     val donut: Donut, // Информация о записи VK Donut
-    val postponedId: UInt = 0U// Идентификатор отложенной записи. Это поле возвращается тогда, когда запись стояла на таймере
+    val postponedId: UInt = 0U// Идентификатор отложенной записи. Это поле возвращается тогда, когда запись стояла на таймере, val id: kotlin.UInt){}
 ) {
 
-    private var initialId: UInt = 0U
-    private var id :UInt
-    init {
-        id = _id
+    data class Comments (
+        val count: UInt, // количество комментариев
+        val canPost: Boolean = false, // информация о том, может ли текущий пользователь комментировать запись
+        val groupsCanPost: Boolean = false, // информация о том, могут ли сообщества комментировать запись
+        val canClose: Boolean = false, // может ли текущий пользователь закрыть комментарии к записи;
+        val canOpen: Boolean = false, // может ли текущий пользователь открыть комментарии к записи
+
+    ) {
+        override fun toString(): String {
+            return "Comments =$count"
+        }
     }
 
+    data class Copyright(
+        val id: UInt,
+        val link: String,
+        val name: String,
+        val type: String
+    )
 
-    private fun generateId(): UInt {
-        initialId += 1U
-        return initialId
-    }
-    internal fun getId() :UInt {
-        return id
+    data class Likes(
+        var count: UInt = 0U, // число пользователей, которым понравилась запись
+        val userLikes: Boolean = false, // наличие отметки «Мне нравится» от текущего пользователя
+        val canLike: Boolean = false, // информация о том, может ли текущий пользователь поставить отметку «Мне нравится»
+        val canPublish: Boolean = false // информация о том, может ли текущий пользователь сделать репост записи
+    ) {
+        override fun toString(): String {
+            return "Likes =$count"
+        }
     }
 
-    internal fun setId(postId: UInt)  {
-        id = postId
-    }
+    data class Reposts(
+        val count: UInt, // число пользователей, скопировавших запись
+        val userReposted: Boolean = false // наличие репоста от текущего пользователя
+    )
+
+    data class Views(
+        val count: UInt // число просмотров записи
+    )
+
+    data class Donut(
+        val isDonut: Boolean = false, // запись доступна только платным подписчикам VK Donut
+        val paidDuration: UInt = 60U, // время, в течение которого запись будет доступна только платным подписчикам VK Donut
+        val placeholder: Any = Any(), // заглушка для пользователей, которые не оформили подписку VK Donut. Отображается вместо содержимого записи
+        val canPublishFreeCopy: Boolean = false, // можно ли открыть запись для всех пользователей, а не только подписчиков VK Donut
+        val editMode: EditMode = EditMode.ALL// информация о том, какие значения VK Donut можно изменить в записи
+    )
 
 
     override fun toString(): String {
