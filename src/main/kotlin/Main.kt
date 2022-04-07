@@ -78,14 +78,11 @@ fun main() {
     service.add(post1)
     service.add(post2)
     println("Вывод первоначальных постов")
-    println(service)
+    println(service.toPrint())
     service.likeById(2U)
     println("Вывод постов после лайка")
-    println(service)
+    println(service.toPrint())
     service.update(updatePostText)
     println("Вывод значений после изменения поста")
-    println(service)
-
-
-
+    println(service.toPrint())
 }

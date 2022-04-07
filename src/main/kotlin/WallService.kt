@@ -30,10 +30,10 @@ class WallService {
         return false
     }
 
-    override fun toString(): String {
+    fun toPrint() {
         for (post in posts) {
             println(post)
         }
-        return ""
     }
+
 }
