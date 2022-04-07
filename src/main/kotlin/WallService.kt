@@ -2,10 +2,9 @@ class WallService {
     private var posts = emptyArray<Post>()
     private var postId = 0U
 
-    @Suppress("NAME_SHADOWING")
     fun add (post: Post) : Post {
-        val post = post.copy(id = generateId())
-        posts += post
+        val post1 = post.copy(id = generateId())
+        posts += post1
         return posts.last()
     }
 
@@ -14,27 +13,25 @@ class WallService {
         return postId
     }
 
-    @Suppress("NAME_SHADOWING")
-    fun update(post: Post): Boolean {
-        val postId = post.component1()
-        val postChanged = post
+    fun update(post1: Post): Boolean {
+        val postId = post1.id
         for ((index, post) in posts.withIndex()) {
             if (post.id == postId) {
                 posts[index] = post.copy(
-                    ownerId = postChanged.ownerId,
-                    fromID = postChanged.fromID,
-                    createdBy = postChanged.createdBy,
-                    date = postChanged.date,
-                    text = postChanged.text,
-                    replyOwnerId = postChanged.replyOwnerId,
-                    replyPostId = postChanged.replyPostId,
-                    comments = postChanged.comments,
-                    copyright = postChanged.copyright,
-                    reposts = postChanged.reposts,
-                    views = postChanged.views,
-                    signerId = postChanged.signerId,
-                    canPin = postChanged.canPin,
-                    isPinned = postChanged.isPinned,
+                    ownerId = post1.ownerId,
+//                    fromID = post1.fromID,
+//                    createdBy = post1.createdBy,
+                    date = post1.date,
+                    text = post1.text,
+//                    replyOwnerId = post1.replyOwnerId,
+//                    replyPostId = post1.replyPostId,
+//                    comments = post1.comments,
+//                    copyright = post1.copyright,
+//                    reposts = post1.reposts,
+//                    views = post1.views,
+//                    signerId = post1.signerId,
+//                    canPin = post1.canPin,
+//                    isPinned = post1.isPinned,
                 )
                 return true
             }
@@ -55,7 +52,7 @@ class WallService {
 
     override fun toString(): String {
         for (post in posts) {
-             println(post.toString())
+            println(post)
         }
         return ""
     }
