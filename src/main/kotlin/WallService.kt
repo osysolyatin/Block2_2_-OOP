@@ -13,33 +13,13 @@ class WallService {
         return postId
     }
 
-    fun update(post1: Post): Boolean {
-        val postId = post1.id
-        for ((index, post) in posts.withIndex()) {
-            if (post.id == postId) {
-                posts[index] = post.copy(
-                    ownerId = post1.ownerId,
-//                    fromID = post1.fromID,
-//                    createdBy = post1.createdBy,
-                    date = post1.date,
-                    text = post1.text,
-//                    replyOwnerId = post1.replyOwnerId,
-//                    replyPostId = post1.replyPostId,
-//                    comments = post1.comments,
-//                    copyright = post1.copyright,
-//                    reposts = post1.reposts,
-//                    views = post1.views,
-//                    signerId = post1.signerId,
-//                    canPin = post1.canPin,
-//                    isPinned = post1.isPinned,
-                )
-                return true
-            }
-        }
-        return false
-
+    fun update (post1: Post) : Boolean {
+        val id = post1.id
+        val findPost = posts.find { it.id == id } ?: return false
+        val postIndex = posts.indexOf(findPost)
+        posts[postIndex] = post1.copy(ownerId = findPost.ownerId, date = findPost.date, likes = findPost.likes)
+        return true
     }
-
 
     fun likeById (id: UInt) : Boolean {
         for ((index, post) in posts.withIndex())

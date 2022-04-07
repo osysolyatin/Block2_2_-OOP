@@ -13,7 +13,7 @@ data class Post(
     val createdBy: UInt, // Идентификатор администратора, который опубликовал запись (возвращается только для сообществ при запросе с ключом доступа администратора).
     // Возвращается в записях, опубликованных менее 24 часов назад.
     val date: UInt, // Время публикации записи в формате unixTime
-    val text: String, // Текст записи
+    var text: String, // Текст записи
     val replyOwnerId: UInt, // Идентификатор владельца записи, в ответ на которую была оставлена текущая
     val replyPostId: UInt, // Идентификатор записи, в ответ на которую была оставлена текущая
     val friendsOnly: Boolean = false, // true - если запись была создана с опцией «Только для друзей»
@@ -84,6 +84,6 @@ data class Post(
 
 
     override fun toString(): String {
-        return "Post = 'id = $id''$text', '$likes', '$comments'"
+        return "Post = 'id = $id' ownerID = $ownerId '$text', '$likes', '$comments'"
     }
 }

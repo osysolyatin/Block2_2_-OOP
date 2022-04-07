@@ -56,8 +56,8 @@ fun main() {
     )
 
     val updatePostText = Post(
-        id = 2U,
-        ownerId =   2U,
+        id =2U,
+        ownerId =   4U,
         fromID = 1U,
         createdBy = 78U,
         date = 7844555U,

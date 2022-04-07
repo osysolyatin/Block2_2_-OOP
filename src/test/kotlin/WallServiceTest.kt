@@ -33,7 +33,7 @@ class WallServiceTest {
         val result = service.likeById(id)
 
         //assert
-        assertEquals(true,result)
+        assertTrue(result)
     }
 
     @Test
@@ -66,7 +66,7 @@ class WallServiceTest {
         val result = service.likeById(id)
 
         //assert
-        assertEquals(false,result)
+        assertFalse(result)
     }
 
     @Test
@@ -125,14 +125,33 @@ class WallServiceTest {
             isPinned = true,
             donut = Post.Donut(editMode = EditMode.DURATION),
         )
+        val updatePostText = Post(
+            id =1U,
+            ownerId =   4U,
+            fromID = 1U,
+            createdBy = 78U,
+            date = 7844555U,
+            text = "Второй пост - Измененный",
+            replyOwnerId = 2U,
+            replyPostId = 78U,
+            comments = Post.Comments(count = 78U),
+            copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
+            likes = Post.Likes(count = 0U),
+            reposts = Post.Reposts(count = 155U, userReposted = true),
+            views = Post.Views(count = 198U),
+            signerId = 0U,
+            canPin = true,
+            isPinned = true,
+            donut = Post.Donut(editMode = EditMode.DURATION),
+        )
         service.add(post1)
         service.add(post2)
 
         //act
-        val result = service.update(post2)
+        val result = service.update(updatePostText)
 
         //assert
-        assertEquals(true,result)
+        assertTrue(result)
 
     }
 
@@ -192,14 +211,33 @@ class WallServiceTest {
             isPinned = true,
             donut = Post.Donut(editMode = EditMode.DURATION),
         )
+        val updatePostText = Post(
+            id =4U,
+            ownerId =   4U,
+            fromID = 1U,
+            createdBy = 78U,
+            date = 7844555U,
+            text = "Второй пост - Измененный",
+            replyOwnerId = 2U,
+            replyPostId = 78U,
+            comments = Post.Comments(count = 78U),
+            copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
+            likes = Post.Likes(count = 0U),
+            reposts = Post.Reposts(count = 155U, userReposted = true),
+            views = Post.Views(count = 198U),
+            signerId = 0U,
+            canPin = true,
+            isPinned = true,
+            donut = Post.Donut(editMode = EditMode.DURATION),
+        )
         service.add(post1)
         service.add(post2)
 
         //act
-        val result = service.update(post2)
+        val result = service.update(updatePostText)
 
         //assert
-        assertEquals(false,result)
+        assertFalse(result)
 
     }
 }
