@@ -24,7 +24,7 @@ class WallService {
     fun likeById (id: UInt) : Boolean {
         for ((index, post) in posts.withIndex())
             if (post.id == id){
-                posts[index] = post.copy(likes = Post.Likes(post.likes.count + 1U))
+                posts[index] = post.copy(likes = Post.Likes(post.likes?.count?.plus(1U) ?: 0U))
                 return true
             }
         return false

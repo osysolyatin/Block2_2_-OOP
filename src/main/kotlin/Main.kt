@@ -1,3 +1,5 @@
+import java.util.*
+
 fun main() {
     val service = WallService()
     val post1 = Post(
@@ -74,9 +76,25 @@ fun main() {
         isPinned = true,
         donut = Post.Donut(editMode = EditMode.DURATION),
     )
+    val videoAttachment = VideoAttachment()
+    val audioAttachment = AudioAttachment()
+    val noteAttachment = NoteAttachment()
+    val photoAttachment = PhotoAttachment()
+    val documentAttachment = DocumentAttachment()
+
+    post1.attachment[0] = videoAttachment
+    post1.attachment[1] = documentAttachment
+    post2.attachment[0] = audioAttachment
+    post2.attachment[2] = photoAttachment
+    post1.attachment[4] = noteAttachment
+
+    println("attachment - ${post1.attachment.size}")
+    println("Post 1 attachment ${post1.attachment.contentToString()}")
+    println("Post 2 attachment ${post2.attachment.contentToString()}")
 
     service.add(post1)
     service.add(post2)
+
     println("Вывод первоначальных постов")
     println(service)
     service.likeById(2U)
