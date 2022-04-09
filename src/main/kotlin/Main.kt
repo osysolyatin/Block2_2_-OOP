@@ -93,6 +93,7 @@ fun main() {
     post2.addAttachment(photoAttachment)
 
     updatePostText.addAttachment(noteAttachment)
+    updatePostText.addAttachment(documentAttachment)
 
 
 
