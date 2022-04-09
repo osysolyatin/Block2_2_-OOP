@@ -1,4 +1,3 @@
-import java.util.*
 
 fun main() {
     val service = WallService()
@@ -18,6 +17,7 @@ fun main() {
         reposts = Post.Reposts(count = 5U, userReposted = false),
         views = Post.Views(count = 125U),
         postType = PostType.POST,
+        attachment = arrayListOf(),
         signerId = 0U,
         canPin = true,
         canDelete = true,
@@ -50,6 +50,7 @@ fun main() {
         likes = Post.Likes(count = 98U),
         reposts = Post.Reposts(count = 155U, userReposted = true),
         views = Post.Views(count = 198U),
+        attachment = arrayListOf(),
         signerId = 0U,
         canPin = true,
         isPinned = true,
@@ -71,26 +72,33 @@ fun main() {
         likes = Post.Likes(count = 0U),
         reposts = Post.Reposts(count = 155U, userReposted = true),
         views = Post.Views(count = 198U),
+        attachment = arrayListOf(),
         signerId = 0U,
         canPin = true,
         isPinned = true,
         donut = Post.Donut(editMode = EditMode.DURATION),
     )
+
     val videoAttachment = VideoAttachment()
     val audioAttachment = AudioAttachment()
     val noteAttachment = NoteAttachment()
     val photoAttachment = PhotoAttachment()
     val documentAttachment = DocumentAttachment()
 
-    post1.attachment[0] = videoAttachment
-    post1.attachment[1] = documentAttachment
-    post2.attachment[0] = audioAttachment
-    post2.attachment[2] = photoAttachment
-    post1.attachment[4] = noteAttachment
+    post1.addAttachment(videoAttachment)
+    post1.addAttachment(documentAttachment)
+    post1.addAttachment(noteAttachment)
 
-    println("attachment - ${post1.attachment.size}")
-    println("Post 1 attachment ${post1.attachment.contentToString()}")
-    println("Post 2 attachment ${post2.attachment.contentToString()}")
+    post2.addAttachment(audioAttachment)
+    post2.addAttachment(photoAttachment)
+
+    updatePostText.addAttachment(noteAttachment)
+
+
+
+    println("attachment - ${post1.attachment?.size}")
+    println("Post 1 attachment ${post1.attachment.toString()}")
+    println("Post 2 attachment ${post2.attachment.toString()}")
 
     service.add(post1)
     service.add(post2)

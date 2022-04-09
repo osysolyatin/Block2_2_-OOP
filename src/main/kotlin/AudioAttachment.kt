@@ -1,5 +1,5 @@
 class AudioAttachment(override val type: String = "audio") : Attachment {
-    val audio : Audio = Audio(
+    private val audio : Audio = Audio(
         id = 1U,
         albumId = 1U,
         ownerId = 1U,

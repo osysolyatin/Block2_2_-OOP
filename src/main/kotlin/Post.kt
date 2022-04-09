@@ -23,6 +23,7 @@ data class Post(
     val reposts: Reposts?, // Информация о репостах записи («Рассказать друзьям»)
     val views: Views?, // Информация о просмотрах записи
     val postType: PostType = PostType.POST, // Тип записи, может принимать следующие значения: post, copy, reply, postpone, suggest
+    var attachment: ArrayList<Attachment>?,
     val signerId: UInt?, // Идентификатор автора, если запись была опубликована от имени сообщества и подписана пользователем
     val canPin: Boolean = false, // Информация о том, может ли текущий пользователь закрепить запись
     val canDelete: Boolean = false, // Информация о том, может ли текущий пользователь удалить запись
@@ -33,15 +34,19 @@ data class Post(
     val donut: Donut?, // Информация о записи VK Donut
     val postponedId: UInt? = 0U// Идентификатор отложенной записи. Это поле возвращается тогда, когда запись стояла на таймере, val id: kotlin.UInt){}
 ) {
-    var attachment = arrayOfNulls<Attachment>(5)
-        set(value) {
-            field += value
-        }
+//    var attachment = emptyArray<Attachment>()
+//        set(value) {
+//            field += value
+//        }
 
 //    fun addAttachment (_attachment: Attachment) : Attachment {
-//        attachment = attachment.plus(_attachment)
-//        return attachment.last() ?: _attachment
+//        attachment = attachment?.plus(_attachment)
+//        return attachment!!.last()
 //    }
+
+    fun addAttachment (_attachment: Attachment)  {
+        this.attachment?.add(_attachment)
+    }
 
 
     data class Comments (
@@ -94,6 +99,6 @@ data class Post(
 
 
     override fun toString(): String {
-        return "Post = 'id = $id' ownerID = $ownerId '$text', '$likes', '$comments', attachment - ${attachment.contentToString()}"
+        return "Post = 'id = $id' ownerID = $ownerId '$text', '$likes', '$comments', attachment - ${attachment.toString()}"
     }
 }

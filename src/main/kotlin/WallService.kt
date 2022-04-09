@@ -16,7 +16,9 @@ class WallService {
     fun update (post1: Post) : Boolean {
         val id = post1.id
         val findPost = posts.find { it.id == id } ?: return false
+        findPost.attachment?.let { post1.attachment?.addAll(it) }
         val postIndex = posts.indexOf(findPost)
+
         posts[postIndex] = post1.copy(ownerId = findPost.ownerId, date = findPost.date, likes = findPost.likes)
         return true
     }

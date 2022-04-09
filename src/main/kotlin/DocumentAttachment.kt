@@ -1,9 +1,15 @@
 class DocumentAttachment(override val type: String = "document")  : Attachment {
-    val photo : Document = Document(
+    private val document : Document = Document(
         id = 1U,
         title = "Document",
         ownerId = 1U,
         userId = 1U)
+
+    override fun toString(): String {
+        return "DocumentAttachment(type='$type', document=$document)"
+    }
+
+
 }
 
 class Document (

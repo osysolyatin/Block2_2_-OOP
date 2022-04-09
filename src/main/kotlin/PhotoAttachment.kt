@@ -1,10 +1,14 @@
 class PhotoAttachment(override val type: String = "photo") : Attachment {
-    val photo : Photo = Photo(
+    private val photo : Photo = Photo(
         id = 1U,
         ownerId = 1U,
         userId = 1U,
         text = "фото",
         date = 46468856U)
+
+    override fun toString(): String {
+        return "PhotoAttachment(type='$type', photo=$photo)"
+    }
 }
 
 class Photo (
@@ -14,5 +18,8 @@ class Photo (
     val text: String,
     val date: UInt
 ) {
+    override fun toString(): String {
+        return "Photo(id=$id, ownerId=$ownerId, userId=$userId, text='$text', date=$date)"
+    }
 
 }
