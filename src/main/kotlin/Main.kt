@@ -139,12 +139,12 @@ fun main() {
     )
 
     service.createComment(comment1)
-    service.createComment(comment2)
-    service.createComment(comment3)
+//    service.createComment(comment2)
+//    service.createComment(comment3)
 
     println("comment1 commentId = ${comment1.commentID}")
-    println("comment2 commentId = ${comment2.commentID}")
-    println("comment3 commentId = ${comment3.commentID}")
+//    println("comment2 commentId = ${comment2.commentID}")
+//    println("comment3 commentId = ${comment3.commentID}")
     println("Вывод постов после комментария: \n")
     println(service.toPrint())
 
