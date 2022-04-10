@@ -295,7 +295,7 @@ class WallServiceTest {
         // arrange
         val service = WallService()
         val comment1 = Post.Comments(
-            postId = 3U,
+            postId = 4U,
             message = "Первый комментарий",
             count = 76U
         )
