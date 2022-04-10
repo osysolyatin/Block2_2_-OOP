@@ -7,7 +7,7 @@ data class VideoAttachment(override val type: String = "video") : Attachment {
         userId = 1U)
 
     override fun toString(): String {
-        return "Video(type='$type', video=$video)"
+        return "VideoAttachment(type='$type', video=$video)"
     }
 }
 

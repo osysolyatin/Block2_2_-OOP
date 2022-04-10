@@ -34,15 +34,6 @@ data class Post(
     val donut: Donut?, // Информация о записи VK Donut
     val postponedId: UInt? = 0U// Идентификатор отложенной записи. Это поле возвращается тогда, когда запись стояла на таймере, val id: kotlin.UInt){}
 ) {
-//    var attachment = emptyArray<Attachment>()
-//        set(value) {
-//            field += value
-//        }
-
-//    fun addAttachment (_attachment: Attachment) : Attachment {
-//        attachment = attachment?.plus(_attachment)
-//        return attachment!!.last()
-//    }
 
     fun addAttachment (_attachment: Attachment)  {
         this.attachment?.add(_attachment)
@@ -97,8 +88,15 @@ data class Post(
         val editMode: EditMode = EditMode.ALL// информация о том, какие значения VK Donut можно изменить в записи
     )
 
+    fun toPrintArray(_elem : ArrayList<Attachment>) = buildString{
+        for (elem in _elem) {
+            append(elem.toString())
+            append("\n")
+        }
+    }
 
     override fun toString(): String {
-        return "Post = 'id = $id' ownerID = $ownerId '$text', '$likes', '$comments', attachment - ${attachment.toString()}"
+        return "Post = 'id = $id' ownerID = $ownerId '$text', '$likes', '$comments', \n" +
+                "attachment(s):\n${attachment?.let { toPrintArray(it) }} \n"
     }
 }

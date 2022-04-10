@@ -6,7 +6,7 @@ class AudioAttachment(override val type: String = "audio") : Attachment {
         userId = 1U)
 
     override fun toString(): String {
-        return "Audio(type='$type', audio=$audio)"
+        return "AudioAttachment(type='$type', audio=$audio)"
     }
 }
 

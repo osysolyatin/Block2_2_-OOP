@@ -32,10 +32,13 @@ class WallService {
         return false
     }
 
-    override fun toString(): String {
+    fun toPrint() = buildString{
         for (post in posts) {
-            println(post)
+            append(post.toString())
         }
-        return ""
+    }
+
+    override fun toString(): String {
+        return posts.contentToString() + '\n'
     }
 }
