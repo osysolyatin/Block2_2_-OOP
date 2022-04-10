@@ -6,6 +6,17 @@ enum class EditMode {
     ALL, DURATION
 }
 
+enum class ReportCommentReasons(i: Int) {
+    SPAM(0), // спам
+    CHILDPORNO(1), // детская порнография
+    EXTRIMISM(2), // экстремизм
+    VIOLENCE(3), // насилие
+    DRUGPROPOGANDA(4), // пропаганда наркотиков
+    ADULTCONTENT(5), // материал для взрослых
+    INSULT(6), // оскорбление
+    CALLTOSUICIDE(8) // призывы к суициду
+}
+
 data class Post(
     val id: UInt, // Идентификатор записи
     val ownerId: UInt, // Идентификатор владельца стены, на которой размещена запись
@@ -34,9 +45,15 @@ data class Post(
     val donut: Donut?, // Информация о записи VK Donut
     val postponedId: UInt? = 0U// Идентификатор отложенной записи. Это поле возвращается тогда, когда запись стояла на таймере, val id: kotlin.UInt){}
 ) {
+    private var counterId = 0U
 
     fun addAttachment (_attachment: Attachment)  {
         this.attachment?.add(_attachment)
+    }
+
+    private fun generateId(): UInt {
+        counterId += 1U
+        return counterId
     }
 
 
@@ -56,6 +73,10 @@ data class Post(
         val canOpen: Boolean = false, // может ли текущий пользователь открыть комментарии к записи
 
     ) {
+        var commentID: UInt = 0U
+
+
+
         override fun toString(): String {
             return "Comments =$count, Text comment - $message"
         }
@@ -96,7 +117,7 @@ data class Post(
         val editMode: EditMode = EditMode.ALL// информация о том, какие значения VK Donut можно изменить в записи
     )
 
-    fun toPrintArray(_elem : ArrayList<Attachment>) = buildString{
+    private fun toPrintArray(_elem : ArrayList<Attachment>) = buildString{
         for (elem in _elem) {
             append(elem.toString())
             append("\n")

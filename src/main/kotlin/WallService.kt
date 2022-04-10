@@ -3,7 +3,8 @@ import kotlin.jvm.Throws
 class WallService {
     private var posts = emptyArray<Post>()
     private var comments = emptyArray<Post.Comments>()
-    private var postId = 0U
+    private var reportComments = emptyArray<ReportCommentReasons>()
+    private var counterId = 0U
 
     fun add(post: Post): Post {
         val post1 = post.copy(id = generateId())
@@ -12,8 +13,8 @@ class WallService {
     }
 
     private fun generateId(): UInt {
-        postId += 1U
-        return postId
+        counterId += 1U
+        return counterId
     }
 
     fun update(post1: Post): Boolean {
@@ -39,14 +40,25 @@ class WallService {
     fun createComment(comment: Post.Comments): Boolean {
         for ((index, post) in posts.withIndex())
             if (post.id == comment.postId) {
-                println("post.id - ${post.id}")
+                comment.commentID = generateId()
                 comments += comment
-                println(comments.size)
                 posts[index] = post.copy(comments = comment)
                 return true
             } else throw PostNotFoundException("No post with id ${comment.postId}")
         return false
     }
+
+    fun reportComment (_comment: Post.Comments, _reason: ReportCommentReasons) : Int {
+        if (_reason in ReportCommentReasons.values()) {
+            for (comment in comments)
+                if (_comment.commentID == comment.commentID) {
+                    reportComments += _reason
+                    return 1
+                } else throw CommentNotFoundException("No comment with id ${comment.commentID}")
+        } else throw ReasonNotFoundException("Причина не соответствует")
+        return 0
+    }
+
 
     fun toPrint() = buildString {
         for (post in posts) {
