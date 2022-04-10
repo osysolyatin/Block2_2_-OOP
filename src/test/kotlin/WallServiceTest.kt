@@ -17,7 +17,7 @@ class WallServiceTest {
             text = "Это мой второй пост",
             replyOwnerId = 2U,
             replyPostId = 78U,
-            comments = Post.Comments(count = 78U),
+            comments = Post.Comments(postId = id, count = 78U),
             copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
             likes = Post.Likes(count = 98U),
             reposts = Post.Reposts(count = 155U, userReposted = true),
@@ -51,7 +51,7 @@ class WallServiceTest {
             text = "Это мой второй пост",
             replyOwnerId = 2U,
             replyPostId = 78U,
-            comments = Post.Comments(count = 78U),
+            comments = Post.Comments(postId = id, count = 78U),
             copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
             likes = Post.Likes(count = 98U),
             reposts = Post.Reposts(count = 155U, userReposted = true),
@@ -85,7 +85,7 @@ class WallServiceTest {
             replyOwnerId = 1U,
             replyPostId = 67U,
             friendsOnly = true,
-            comments = Post.Comments(count = 22U, canPost = true, groupsCanPost = false, canClose = true, canOpen = true),
+            comments = Post.Comments(postId = 0U, count = 22U, canPost = true, groupsCanPost = false, canClose = true, canOpen = true),
             copyright = Post.Copyright(id = 777U, "www.netology.ru", "Нетология", "web"),
             likes = Post.Likes(count = 22U, userLikes = true, canLike = true, canPublish = true),
             reposts = Post.Reposts(count = 5U, userReposted = false),
@@ -118,7 +118,7 @@ class WallServiceTest {
             text = "Это мой второй пост",
             replyOwnerId = 2U,
             replyPostId = 78U,
-            comments = Post.Comments(count = 78U),
+            comments = Post.Comments(postId = 1U, count = 78U),
             copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
             likes = Post.Likes(count = 98U),
             reposts = Post.Reposts(count = 155U, userReposted = true),
@@ -138,7 +138,7 @@ class WallServiceTest {
             text = "Второй пост - Измененный",
             replyOwnerId = 2U,
             replyPostId = 78U,
-            comments = Post.Comments(count = 78U),
+            comments = Post.Comments(postId = 1U, count = 78U),
             copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
             likes = Post.Likes(count = 0U),
             reposts = Post.Reposts(count = 155U, userReposted = true),
@@ -174,7 +174,7 @@ class WallServiceTest {
             replyOwnerId = 1U,
             replyPostId = 67U,
             friendsOnly = true,
-            comments = Post.Comments(count = 22U, canPost = true, groupsCanPost = false, canClose = true, canOpen = true),
+            comments = Post.Comments(postId = 0U, count = 22U, canPost = true, groupsCanPost = false, canClose = true, canOpen = true),
             copyright = Post.Copyright(id = 777U, "www.netology.ru", "Нетология", "web"),
             likes = Post.Likes(count = 22U, userLikes = true, canLike = true, canPublish = true),
             reposts = Post.Reposts(count = 5U, userReposted = false),
@@ -207,7 +207,7 @@ class WallServiceTest {
             text = "Это мой второй пост",
             replyOwnerId = 2U,
             replyPostId = 78U,
-            comments = Post.Comments(count = 78U),
+            comments = Post.Comments(postId = 3U, count = 78U),
             copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
             likes = Post.Likes(count = 98U),
             reposts = Post.Reposts(count = 155U, userReposted = true),
@@ -227,7 +227,7 @@ class WallServiceTest {
             text = "Второй пост - Измененный",
             replyOwnerId = 2U,
             replyPostId = 78U,
-            comments = Post.Comments(count = 78U),
+            comments = Post.Comments(postId = 4U, count = 78U),
             copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
             likes = Post.Likes(count = 0U),
             reposts = Post.Reposts(count = 155U, userReposted = true),
@@ -246,6 +246,84 @@ class WallServiceTest {
 
         //assert
         assertFalse(result)
+
+    }
+
+    @Test
+    fun createCommentTrue(){
+        // arrange
+        val service = WallService()
+        val comment1 = Post.Comments(
+            postId = 1U,
+            message = "Первый комментарий",
+            count = 76U
+        )
+        val post1 = Post(
+            id = 1U,
+            ownerId =   2U,
+            fromID = 1U,
+            createdBy = 78U,
+            date = 7844555U,
+            text = "Это мой второй пост",
+            replyOwnerId = 2U,
+            replyPostId = 78U,
+            comments = Post.Comments(count = 78U, postId = 2U),
+            copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
+            likes = Post.Likes(count = 98U),
+            reposts = Post.Reposts(count = 155U, userReposted = true),
+            views = Post.Views(count = 198U),
+            attachment = arrayListOf(),
+            signerId = 0U,
+            canPin = true,
+            isPinned = true,
+            donut = Post.Donut(editMode = EditMode.DURATION),
+            )
+        service.add(post1)
+
+        // act
+
+        val result = service.createComment(comment1)
+
+        //assert
+
+        assertTrue(result)
+
+    }
+
+    @Test(expected =  PostNotFoundException::class)
+    fun createCommentShouldThrow(){
+        // arrange
+        val service = WallService()
+        val comment1 = Post.Comments(
+            postId = 3U,
+            message = "Первый комментарий",
+            count = 76U
+        )
+        val post1 = Post(
+            id = 1U,
+            ownerId =   2U,
+            fromID = 1U,
+            createdBy = 78U,
+            date = 7844555U,
+            text = "Это мой второй пост",
+            replyOwnerId = 2U,
+            replyPostId = 78U,
+            comments = Post.Comments(count = 78U, postId = 2U),
+            copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
+            likes = Post.Likes(count = 98U),
+            reposts = Post.Reposts(count = 155U, userReposted = true),
+            views = Post.Views(count = 198U),
+            attachment = arrayListOf(),
+            signerId = 0U,
+            canPin = true,
+            isPinned = true,
+            donut = Post.Donut(editMode = EditMode.DURATION),
+        )
+        service.add(post1)
+
+        // act
+
+        service.createComment(comment1)
 
     }
 }

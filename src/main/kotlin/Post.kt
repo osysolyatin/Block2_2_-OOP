@@ -41,6 +41,14 @@ data class Post(
 
 
     data class Comments (
+        val ownerId: Int  = 1, //Идентификатор пользователя или сообщества, на чьей стене находится запись, к которой необходимо добавить комментарий.
+        val postId: UInt, //Идентификатор записи на стене
+        val fromGroup: UInt = 0U, //Идентификатор сообщества, от имени которого публикуется комментарий. По умолчанию: 0
+        val message: String? = "", //Текст комментария. Обязательный параметр, если не передан параметр attachments.
+        val replyToComment: UInt = 0U, //Идентификатор комментария, в ответ на который должен быть добавлен новый комментарий
+        val attachment: ArrayList<Attachment> = arrayListOf(), // Список объектов, приложенных к комментарию и разделённых символом «,».
+        val stickerId: UInt = 0U, //Идентификатор стикера.
+        val guid: String = "", //Уникальный идентификатор, предназначенный для предотвращения повторной отправки одинакового комментария.
         val count: UInt, // количество комментариев
         val canPost: Boolean = false, // информация о том, может ли текущий пользователь комментировать запись
         val groupsCanPost: Boolean = false, // информация о том, могут ли сообщества комментировать запись
@@ -49,7 +57,7 @@ data class Post(
 
     ) {
         override fun toString(): String {
-            return "Comments =$count"
+            return "Comments =$count, Text comment - $message"
         }
     }
 

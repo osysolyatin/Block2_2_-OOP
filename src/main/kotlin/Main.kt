@@ -11,7 +11,7 @@ fun main() {
         replyOwnerId = 1U,
         replyPostId = 67U,
         friendsOnly = true,
-        comments = Post.Comments(count = 22U, canPost = true, groupsCanPost = false, canClose = true, canOpen = true),
+        comments = Post.Comments(postId = 0U, count = 22U, canPost = true, groupsCanPost = false, canClose = true, canOpen = true),
         copyright = Post.Copyright(id = 777U, "www.netology.ru", "Нетология", "web"),
         likes = Post.Likes(count = 22U, userLikes = true, canLike = true, canPublish = true),
         reposts = Post.Reposts(count = 5U, userReposted = false),
@@ -45,7 +45,7 @@ fun main() {
         text = "Это мой второй пост",
         replyOwnerId = 2U,
         replyPostId = 78U,
-        comments = Post.Comments(count = 78U),
+        comments = Post.Comments(count = 78U, postId = 2U),
         copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
         likes = Post.Likes(count = 98U),
         reposts = Post.Reposts(count = 155U, userReposted = true),
@@ -67,7 +67,7 @@ fun main() {
         text = "Второй пост - Измененный",
         replyOwnerId = 2U,
         replyPostId = 78U,
-        comments = Post.Comments(count = 78U),
+        comments = Post.Comments(postId = 2U, count = 78U),
         copyright = Post.Copyright(id = 178U, "www.vk.com", "ВКонтакте", "social network"),
         likes = Post.Likes(count = 0U),
         reposts = Post.Reposts(count = 155U, userReposted = true),
@@ -98,15 +98,25 @@ fun main() {
     service.add(post1)
     service.add(post2)
 
-    println("Вывод первоначальных постов")
+    println("Вывод первоначальных постов: \n")
     println(service.toPrint())
     service.likeById(2U)
-    println("Вывод постов после лайка")
+    println("Вывод постов после лайка: \n")
     println(service.toPrint())
     service.update(updatePostText)
-    println("Вывод значений после изменения поста")
+    println("Вывод значений после изменения поста: \n")
     println(service.toPrint())
 
-
+    val comment1 = Post.Comments(
+        postId = 1U,
+        message = "Первый комментарий",
+        count = 76U
+    )
+    service.createComment(comment1)
+    println("Вывод постов после комментария: \n")
+    println(service.toPrint())
+//    val commentMessage = service. ?:throw PostNotFoundException("нет поста с id")
+//    val commentMessage = if (service.createComment(comment1))
+//    println("Comment message - $commentMessage")
 
 }
