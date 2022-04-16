@@ -19,7 +19,7 @@ fun main() {
         }
     }
 
-    val post1 = Post(
+    var post1 = Post(
         id = generateId("post"),
         ownerId =   1U,
         fromID = 0U,
@@ -76,7 +76,7 @@ fun main() {
 
     )
 
-    val post3 = Post(
+    var post3 = Post(
         id = generateId("post"),
         ownerId =   3U,
         fromID = 1U,
@@ -141,7 +141,12 @@ fun main() {
     service.update(updatePostText)
     println("Вывод значений после изменения поста: \n")
     println(service.toPrint())
+
+    // Возвращаем посты после изменений
+
+    post1 = service.getPost(1U)
     post2 = service.getPost(2U)
+    post3 = service.getPost(3U)
 
     // Создаем объекты - attachments
 
