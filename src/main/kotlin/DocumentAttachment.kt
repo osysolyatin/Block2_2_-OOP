@@ -8,8 +8,6 @@ class DocumentAttachment(override val type: String = "document")  : Attachment {
     override fun toString(): String {
         return "DocumentAttachment(type='$type', document=$document)"
     }
-
-
 }
 
 class Document (
@@ -21,5 +19,4 @@ class Document (
     override fun toString(): String {
         return "DocumentAttachment(id=$id, title='$title', ownerId=$ownerId, userId=$userId)"
     }
-
 }

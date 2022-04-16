@@ -1,36 +1,36 @@
 import kotlin.jvm.Throws
 
 class WallService {
-    private var posts = emptyArray<Post>()
-    private var comments = emptyArray<Post.Comments>()
-    private var reportComments = emptyArray<ReportCommentReasons>()
-    private var counterId = 0U
+    private var postsArray = emptyArray<Post>()
+    private var commentsArray = emptyArray<Post.Comments>()
+    private var reportCommentsArray  = emptyArray<ReportCommentReasons>()
+    private var counterPostId = 0U
 
     fun add(post: Post): Post {
         val post1 = post.copy(id = generateId())
-        posts += post1
-        return posts.last()
+        postsArray += post1
+        return postsArray.last()
     }
 
     private fun generateId(): UInt {
-        counterId += 1U
-        return counterId
+        counterPostId += 1U
+        return counterPostId
     }
 
     fun update(post1: Post): Boolean {
         val id = post1.id
-        val findPost = posts.find { it.id == id } ?: return false
+        val findPost = postsArray.find { it.id == id } ?: return false
+//        post1.attachment?.addAll(findPost.attachment)
         findPost.attachment?.let { post1.attachment?.addAll(it) }
-        val postIndex = posts.indexOf(findPost)
-
-        posts[postIndex] = post1.copy(ownerId = findPost.ownerId, date = findPost.date, likes = findPost.likes)
+        val postIndex = postsArray.indexOf(findPost)
+        postsArray[postIndex] = post1.copy(id = findPost.id, ownerId = findPost.ownerId, date = findPost.date, likes = findPost.likes)
         return true
     }
 
     fun likeById(id: UInt): Boolean {
-        for ((index, post) in posts.withIndex())
+        for ((index, post) in postsArray.withIndex())
             if (post.id == id) {
-                posts[index] = post.copy(likes = Post.Likes(post.likes?.count?.plus(1U) ?: 0U))
+                postsArray[index] = post.copy(likes = Post.Likes(post.likes?.count?.plus(1U) ?: 0U))
                 return true
             }
         return false
@@ -38,21 +38,22 @@ class WallService {
 
     @Throws(PostNotFoundException::class)
     fun createComment(comment: Post.Comments): Boolean {
-        for ((index, post) in posts.withIndex())
+        for ((index, post) in postsArray.withIndex()) {
             if (post.id == comment.postId) {
-                comment.commentID = generateId()
-                comments += comment
-                posts[index] = post.copy(comments = comment)
+                commentsArray += comment
+                postsArray[index] = post.copy(comments = comment)
                 return true
-            } else throw PostNotFoundException("No post with id ${comment.postId}")
-        return false
+            }
+        }
+        throw PostNotFoundException("No post with id ${comment.postId}")
+//        return false
     }
 
     fun reportComment (_comment: Post.Comments, _reason: ReportCommentReasons) : Int {
         if (_reason in ReportCommentReasons.values()) {
-            for (comment in comments)
+            for (comment in commentsArray)
                 if (_comment.commentID == comment.commentID) {
-                    reportComments += _reason
+                    reportCommentsArray += _reason
                     return 1
                 } else throw CommentNotFoundException("No comment with id ${comment.commentID}")
         } else throw ReasonNotFoundException("Причина не соответствует")
@@ -61,12 +62,12 @@ class WallService {
 
 
     fun toPrint() = buildString {
-        for (post in posts) {
+        for (post in postsArray) {
             append(post.toString())
         }
     }
 
     override fun toString(): String {
-        return posts.contentToString() + '\n' + comments.contentToString() + '\n'
+        return postsArray.contentToString() + '\n' + commentsArray.contentToString() + '\n'
     }
 }

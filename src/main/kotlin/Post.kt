@@ -45,19 +45,13 @@ data class Post(
     val donut: Donut?, // Информация о записи VK Donut
     val postponedId: UInt? = 0U// Идентификатор отложенной записи. Это поле возвращается тогда, когда запись стояла на таймере, val id: kotlin.UInt){}
 ) {
-    private var counterId = 0U
 
     fun addAttachment (_attachment: Attachment)  {
         this.attachment?.add(_attachment)
     }
 
-    private fun generateId(): UInt {
-        counterId += 1U
-        return counterId
-    }
-
-
     data class Comments (
+        var commentID: UInt,
         val ownerId: Int  = 1, //Идентификатор пользователя или сообщества, на чьей стене находится запись, к которой необходимо добавить комментарий.
         val postId: UInt, //Идентификатор записи на стене
         val fromGroup: UInt = 0U, //Идентификатор сообщества, от имени которого публикуется комментарий. По умолчанию: 0
@@ -73,9 +67,6 @@ data class Post(
         val canOpen: Boolean = false, // может ли текущий пользователь открыть комментарии к записи
 
     ) {
-        var commentID: UInt = 0U
-
-
 
         override fun toString(): String {
             return "Comments =$count, Text comment - $message"
