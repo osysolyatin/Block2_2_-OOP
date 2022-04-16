@@ -1,14 +1,26 @@
 
 fun main() {
     val service = WallService()
-    var counterId = 0U
+    var commentCounterId = 0U
+    var postCounterId = 0U
 
-    fun generateId(): UInt {
-        counterId += 1U
-        return counterId
+    fun generateId(type: String): UInt {
+        return when (type) {
+            "post" -> {
+                postCounterId += 1U
+                postCounterId
+            }
+
+            "comment" -> {
+                commentCounterId += 1U
+                commentCounterId
+            }
+            else -> 0U
+        }
     }
+
     val post1 = Post(
-        id = 0U,
+        id = generateId("post"),
         ownerId =   1U,
         fromID = 0U,
         createdBy = 77U,
@@ -43,7 +55,7 @@ fun main() {
     )
 
     val post2 = Post(
-        id = 0U,
+        id = generateId("post"),
         ownerId =   2U,
         fromID = 1U,
         createdBy = 78U,
@@ -65,7 +77,7 @@ fun main() {
     )
 
     val post3 = Post(
-        id = 0U,
+        id = generateId("post"),
         ownerId =   3U,
         fromID = 1U,
         createdBy = 77U,
@@ -160,19 +172,19 @@ fun main() {
     // Создаем объекты - комментарий к посту с id=1.
 
     val comment1 = Post.Comments(
-        commentID = generateId(),
+        commentID = generateId("comment"),
         postId = 1U,
         message = "Первый комментарий",
         count = 76U
     )
     val comment2 = Post.Comments(
-        commentID = generateId(),
+        commentID = generateId("comment"),
         postId = 2U,
         message = "Второй комментарий",
         count = 45U
     )
     val comment3 = Post.Comments(
-        commentID = generateId(),
+        commentID = generateId("comment"),
         postId = 3U,
         message = "Третий комментарий",
         count = 1U

@@ -4,24 +4,24 @@ class WallService {
     private var postsArray = emptyArray<Post>()
     private var commentsArray = emptyArray<Post.Comments>()
     private var reportCommentsArray  = emptyArray<ReportCommentReasons>()
-    private var counterPostId = 0U
+//    private var counterPostId = 0U
 
     fun add(post: Post): Post {
-        val post1 = post.copy(id = generateId())
-        postsArray += post1
+//        val post1 = post.copy(id = generateId())
+        postsArray += post
         return postsArray.last()
     }
 
-    private fun generateId(): UInt {
-        counterPostId += 1U
-        return counterPostId
-    }
+//    private fun generateId(): UInt {
+//        counterPostId += 1U
+//        return counterPostId
+//    }
 
     fun update(post1: Post): Boolean {
         val id = post1.id
         val findPost = postsArray.find { it.id == id } ?: return false
-//        post1.attachment?.addAll(findPost.attachment)
-        findPost.attachment?.let { post1.attachment?.addAll(it) }
+        post1.attachment?.plus(findPost.attachment)
+//        findPost.attachment?.let { post1.attachment?.addAll(it) }
         val postIndex = postsArray.indexOf(findPost)
         postsArray[postIndex] = post1.copy(id = findPost.id, ownerId = findPost.ownerId, date = findPost.date, likes = findPost.likes)
         return true
