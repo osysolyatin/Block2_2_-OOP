@@ -5,6 +5,10 @@ class WallService {
     private var commentsArray = emptyArray<Post.Comments>()
     private var reportCommentsArray  = emptyArray<ReportCommentReasons>()
 //    private var counterPostId = 0U
+    @Throws(PostNotFoundException::class)
+    fun getPost(_id: UInt) : Post? {
+        return ((postsArray.find { it.id == _id } ?:PostNotFoundException("Такого поста нет")) as Post?)
+    }
 
     fun add(post: Post): Post {
 //        val post1 = post.copy(id = generateId())

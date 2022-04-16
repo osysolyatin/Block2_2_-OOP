@@ -54,7 +54,7 @@ fun main() {
 
     )
 
-    val post2 = Post(
+    var post2 = Post(
         id = generateId("post"),
         ownerId =   2U,
         fromID = 1U,
@@ -141,6 +141,7 @@ fun main() {
     service.update(updatePostText)
     println("Вывод значений после изменения поста: \n")
     println(service.toPrint())
+    post2 = service.getPost(2U)
 
     // Создаем объекты - attachments
 
@@ -161,12 +162,16 @@ fun main() {
 
     post3.addAttachment(noteAttachment)
 
+    service.update(post1)
+    service.update(post2)
+    service.update(post3)
+
     println("Вывод постов после аттачментов:")
     println(service.toPrint())
 
-    updatePostText.addAttachment(noteAttachment)
-    updatePostText.addAttachment(documentAttachment)
-    println("Вывод постов после изменения поста с аттачментом:")
+    post2.addAttachment(noteAttachment)
+    post2.addAttachment(documentAttachment)
+    println("Вывод постов после добавления к посту 2 новых 2х аттачментов:")
     println(service.toPrint())
 
     // Создаем объекты - комментарий к посту с id=1.
@@ -194,10 +199,8 @@ fun main() {
     service.createComment(comment2)
     service.createComment(comment3)
 
-    println("comment1 commentId = ${comment1.commentID}")
-    println("comment2 commentId = ${comment2.commentID}")
-    println("comment3 commentId = ${comment3.commentID}")
-    println("Вывод постов после комментария: \n")
+
+    println("Вывод постов после комментариев: \n")
     println(service.toPrint())
 
 }
