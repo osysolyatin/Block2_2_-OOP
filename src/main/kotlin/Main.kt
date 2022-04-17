@@ -204,8 +204,18 @@ fun main() {
     service.createComment(comment2)
     service.createComment(comment3)
 
+    post1 = service.getPost(1U)
+    post2 = service.getPost(2U)
+    post3 = service.getPost(3U)
 
     println("Вывод постов после комментариев: \n")
     println(service.toPrint())
+
+    post1.comments?.let { service.reportComment(it, ReportCommentReasons.EXTRIMISM) }
+    post2.comments?.let { service.reportComment(it, ReportCommentReasons.ADULTCONTENT) }
+    post3.comments?.let { service.reportComment(it, ReportCommentReasons.SPAM) }
+
+    println("Поступили следующие жалообы на комментарии:")
+    println(service.reportCommentsArray.contentToString())
 
 }

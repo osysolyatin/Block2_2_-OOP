@@ -1,12 +1,12 @@
 import kotlin.jvm.Throws
 
 class WallService {
-    private var postsArray = emptyArray<Post>()
-    private var commentsArray = emptyArray<Post.Comments>()
-    private var reportCommentsArray  = emptyArray<ReportCommentReasons>()
+    var postsArray = emptyArray<Post>()
+    var commentsArray = emptyArray<Post.Comments>()
+    var reportCommentsArray = emptyArray<ReportCommentReasons>()
 
     @Throws(PostNotFoundException::class)
-    fun getPost(_id: UInt) : Post {
+    fun getPost(_id: UInt): Post {
         return postsArray.find { it.id == _id } ?: throw PostNotFoundException("Такого поста нет")
     }
 
@@ -26,7 +26,8 @@ class WallService {
         post1.attachment?.plus(findPost.attachment)
 //        findPost.attachment?.let { post1.attachment?.addAll(it) }
         val postIndex = postsArray.indexOf(findPost)
-        postsArray[postIndex] = post1.copy(id = findPost.id, ownerId = findPost.ownerId, date = findPost.date, likes = findPost.likes)
+        postsArray[postIndex] =
+            post1.copy(id = findPost.id, ownerId = findPost.ownerId, date = findPost.date, likes = findPost.likes)
         return true
     }
 
@@ -52,17 +53,18 @@ class WallService {
 //        return false
     }
 
-    fun reportComment (_comment: Post.Comments, _reason: ReportCommentReasons) : Int {
-        if (_reason in ReportCommentReasons.values()) {
-            for (comment in commentsArray)
-                if (_comment.commentID == comment.commentID) {
-                    reportCommentsArray += _reason
-                    return 1
-                } else throw CommentNotFoundException("No comment with id ${comment.commentID}")
-        } else throw ReasonNotFoundException("Причина не соответствует")
-        return 0
-    }
+    @Throws(ReasonNotFoundException::class, CommentNotFoundException::class)
+    fun reportComment(_comment: Post.Comments, _reason: ReportCommentReasons): Int {
+        if (_reason !in ReportCommentReasons.values()) throw ReasonNotFoundException("Причина не соответствует")
 
+        for (comment in commentsArray) {
+            if (_comment.commentID == comment.commentID) {
+                reportCommentsArray += _reason
+                return 1
+            }
+        }
+        throw CommentNotFoundException("No comment with id ${_comment.commentID}")
+    }
 
     fun toPrint() = buildString {
         for (post in postsArray) {
