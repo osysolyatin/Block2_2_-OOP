@@ -15,11 +15,6 @@ class WallService {
         return postsArray.last()
     }
 
-//    private fun generateId(): UInt {
-//        counterPostId += 1U
-//        return counterPostId
-//    }
-
     fun update(post1: Post): Boolean {
         val id = post1.id
         val findPost = postsArray.find { it.id == id } ?: return false
@@ -50,7 +45,6 @@ class WallService {
             }
         }
         throw PostNotFoundException("No post with id ${comment.postId}")
-//        return false
     }
 
     @Throws(ReasonNotFoundException::class, CommentNotFoundException::class)

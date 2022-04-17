@@ -10,7 +10,7 @@ class WallServiceTest {
         val service = WallService()
         val post = Post(
             id = 1U,
-            ownerId =   2U,
+            ownerId = 2U,
             fromID = 1U,
             createdBy = 78U,
             date = 7844555U,
@@ -44,7 +44,7 @@ class WallServiceTest {
         val service = WallService()
         val post = Post(
             id = 1U,
-            ownerId =   2U,
+            ownerId = 2U,
             fromID = 1U,
             createdBy = 78U,
             date = 7844555U,
@@ -77,7 +77,7 @@ class WallServiceTest {
         val service = WallService()
         val post1 = Post(
             id = 0U,
-            ownerId =   1U,
+            ownerId = 1U,
             fromID = 0U,
             createdBy = 77U,
             date = 5844558U,
@@ -85,7 +85,15 @@ class WallServiceTest {
             replyOwnerId = 1U,
             replyPostId = 67U,
             friendsOnly = true,
-            comments = Post.Comments(postId = 0U, count = 22U, canPost = true, groupsCanPost = false, canClose = true, canOpen = true, commentID = 0U),
+            comments = Post.Comments(
+                postId = 0U,
+                count = 22U,
+                canPost = true,
+                groupsCanPost = false,
+                canClose = true,
+                canOpen = true,
+                commentID = 0U
+            ),
             copyright = Post.Copyright(id = 777U, "www.netology.ru", "Нетология", "web"),
             likes = Post.Likes(count = 22U, userLikes = true, canLike = true, canPublish = true),
             reposts = Post.Reposts(count = 5U, userReposted = false),
@@ -111,7 +119,7 @@ class WallServiceTest {
             )
         val post2 = Post(
             id = 1U,
-            ownerId =   2U,
+            ownerId = 2U,
             fromID = 1U,
             createdBy = 78U,
             date = 7844555U,
@@ -130,8 +138,8 @@ class WallServiceTest {
             donut = Post.Donut(editMode = EditMode.DURATION),
         )
         val updatePostText = Post(
-            id =1U,
-            ownerId =   4U,
+            id = 1U,
+            ownerId = 4U,
             fromID = 1U,
             createdBy = 78U,
             date = 7844555U,
@@ -166,7 +174,7 @@ class WallServiceTest {
         val service = WallService()
         val post1 = Post(
             id = 0U,
-            ownerId =   1U,
+            ownerId = 1U,
             fromID = 0U,
             createdBy = 77U,
             date = 5844558U,
@@ -174,7 +182,15 @@ class WallServiceTest {
             replyOwnerId = 1U,
             replyPostId = 67U,
             friendsOnly = true,
-            comments = Post.Comments(postId = 0U, count = 22U, canPost = true, groupsCanPost = false, canClose = true, canOpen = true, commentID = 0U),
+            comments = Post.Comments(
+                postId = 0U,
+                count = 22U,
+                canPost = true,
+                groupsCanPost = false,
+                canClose = true,
+                canOpen = true,
+                commentID = 0U
+            ),
             copyright = Post.Copyright(id = 777U, "www.netology.ru", "Нетология", "web"),
             likes = Post.Likes(count = 22U, userLikes = true, canLike = true, canPublish = true),
             reposts = Post.Reposts(count = 5U, userReposted = false),
@@ -200,7 +216,7 @@ class WallServiceTest {
             )
         val post2 = Post(
             id = 3U,
-            ownerId =   2U,
+            ownerId = 2U,
             fromID = 1U,
             createdBy = 78U,
             date = 7844555U,
@@ -219,8 +235,8 @@ class WallServiceTest {
             donut = Post.Donut(editMode = EditMode.DURATION),
         )
         val updatePostText = Post(
-            id =4U,
-            ownerId =   4U,
+            id = 4U,
+            ownerId = 4U,
             fromID = 1U,
             createdBy = 78U,
             date = 7844555U,
@@ -250,7 +266,7 @@ class WallServiceTest {
     }
 
     @Test
-    fun createCommentTrue(){
+    fun createCommentTrue() {
         // arrange
         val service = WallService()
         val comment1 = Post.Comments(
@@ -261,7 +277,7 @@ class WallServiceTest {
         )
         val post1 = Post(
             id = 1U,
-            ownerId =   2U,
+            ownerId = 2U,
             fromID = 1U,
             createdBy = 78U,
             date = 7844555U,
@@ -278,7 +294,7 @@ class WallServiceTest {
             canPin = true,
             isPinned = true,
             donut = Post.Donut(editMode = EditMode.DURATION),
-            )
+        )
         service.add(post1)
 
         // act
@@ -291,8 +307,8 @@ class WallServiceTest {
 
     }
 
-    @Test(expected =  PostNotFoundException::class)
-    fun createCommentShouldThrow(){
+    @Test(expected = PostNotFoundException::class)
+    fun createCommentShouldThrow() {
         // arrange
         val service = WallService()
         val comment1 = Post.Comments(
@@ -303,7 +319,7 @@ class WallServiceTest {
         )
         val post1 = Post(
             id = 1U,
-            ownerId =   2U,
+            ownerId = 2U,
             fromID = 1U,
             createdBy = 78U,
             date = 7844555U,
@@ -326,6 +342,137 @@ class WallServiceTest {
         // act
 
         service.createComment(comment1)
+
+    }
+
+    @Test
+    fun reportComment() {
+        // arrange
+        val service = WallService()
+        val post1 = Post(
+            id = 1U,
+            ownerId = 1U,
+            fromID = 0U,
+            createdBy = 77U,
+            date = 5844558U,
+            text = "Это мой первый пост",
+            replyOwnerId = 1U,
+            replyPostId = 67U,
+            friendsOnly = true,
+            comments = Post.Comments(
+                postId = 0U,
+                count = 22U,
+                canPost = true,
+                groupsCanPost = false,
+                canClose = true,
+                canOpen = true,
+                commentID = 0U
+            ),
+            copyright = Post.Copyright(id = 777U, "www.netology.ru", "Нетология", "web"),
+            likes = Post.Likes(count = 22U, userLikes = true, canLike = true, canPublish = true),
+            reposts = Post.Reposts(count = 5U, userReposted = false),
+            views = Post.Views(count = 125U),
+            postType = PostType.POST,
+            attachment = arrayListOf(),
+            signerId = 0U,
+            canPin = true,
+            canDelete = true,
+            canEdit = true,
+            isPinned = false,
+            markedAsAds = false,
+            isFavorite = true,
+            donut = Post.Donut(
+                isDonut = false,
+                paidDuration = 5421U,
+                placeholder = Any(),
+                canPublishFreeCopy = true,
+                editMode = EditMode.ALL
+            ),
+            postponedId = 25U,
+        )
+
+        val comment1 = Post.Comments(
+            commentID = 1U,
+            postId = 1U,
+            message = "Первый комментарий",
+            count = 76U
+        )
+        service.add(post1)
+        service.createComment(comment1)
+
+        val reason = ReportCommentReasons.ADULTCONTENT
+
+        // act
+
+        val result = service.reportComment(comment1, reason)
+        //        println(reportCommentsArray.contentToString())
+
+        // assert
+
+        assertEquals(1, result)
+    }
+
+
+    @Test(expected = CommentNotFoundException::class)
+    fun reportCommentNotFound() {
+        // arrange
+        val service = WallService()
+        val post1 = Post(
+            id = 1U,
+            ownerId = 1U,
+            fromID = 0U,
+            createdBy = 77U,
+            date = 5844558U,
+            text = "Это мой первый пост",
+            replyOwnerId = 1U,
+            replyPostId = 67U,
+            friendsOnly = true,
+            comments = Post.Comments(
+                postId = 0U,
+                count = 22U,
+                canPost = true,
+                groupsCanPost = false,
+                canClose = true,
+                canOpen = true,
+                commentID = 0U
+            ),
+            copyright = Post.Copyright(id = 777U, "www.netology.ru", "Нетология", "web"),
+            likes = Post.Likes(count = 22U, userLikes = true, canLike = true, canPublish = true),
+            reposts = Post.Reposts(count = 5U, userReposted = false),
+            views = Post.Views(count = 125U),
+            postType = PostType.POST,
+            attachment = arrayListOf(),
+            signerId = 0U,
+            canPin = true,
+            canDelete = true,
+            canEdit = true,
+            isPinned = false,
+            markedAsAds = false,
+            isFavorite = true,
+            donut = Post.Donut(
+                isDonut = false,
+                paidDuration = 5421U,
+                placeholder = Any(),
+                canPublishFreeCopy = true,
+                editMode = EditMode.ALL
+            ),
+            postponedId = 25U,
+        )
+
+        val comment1 = Post.Comments(
+            commentID = 1U,
+            postId = 1U,
+            message = "Первый комментарий",
+            count = 76U
+        )
+        service.add(post1)
+//    service.createComment(comment1)
+
+        val reason = ReportCommentReasons.ADULTCONTENT
+
+        // act
+
+        service.reportComment(comment1, reason)
 
     }
 }

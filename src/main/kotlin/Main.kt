@@ -114,6 +114,12 @@ fun main() {
     println("Вывод постов после лайка: \n")
     println(service.toPrint())
 
+    fun renewPosts () {
+        post1 = service.getPost(post1.id)
+        post2 = service.getPost(post2.id)
+        post3 = service.getPost(post3.id)
+    }
+
     // Вносим изменения в пост.
     // Будем вносить изменения в пост с id=2.
 
@@ -144,9 +150,7 @@ fun main() {
 
     // Возвращаем посты после изменений
 
-    post1 = service.getPost(1U)
-    post2 = service.getPost(2U)
-    post3 = service.getPost(3U)
+    renewPosts()
 
     // Создаем объекты - attachments
 
@@ -204,9 +208,7 @@ fun main() {
     service.createComment(comment2)
     service.createComment(comment3)
 
-    post1 = service.getPost(1U)
-    post2 = service.getPost(2U)
-    post3 = service.getPost(3U)
+    renewPosts()
 
     println("Вывод постов после комментариев: \n")
     println(service.toPrint())
@@ -215,7 +217,7 @@ fun main() {
     post2.comments?.let { service.reportComment(it, ReportCommentReasons.ADULTCONTENT) }
     post3.comments?.let { service.reportComment(it, ReportCommentReasons.SPAM) }
 
-    println("Поступили следующие жалообы на комментарии:")
+    println("Поступили следующие жалобы на комментарии:")
     println(service.reportCommentsArray.contentToString())
 
 }

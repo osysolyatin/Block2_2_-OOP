@@ -69,7 +69,7 @@ data class Post(
     ) {
 
         override fun toString(): String {
-            return "Comments =$count, Text comment - $message"
+            return "Comment ID = $commentID, Comments count =$count, Text comment - $message"
         }
     }
 
