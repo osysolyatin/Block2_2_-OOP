@@ -1,8 +1,10 @@
 
 fun main() {
     val service = WallService()
+    val  noteService = NoteService()
     var commentCounterId = 0U
     var postCounterId = 0U
+    var notesCounterID = 0U
 
     fun generateId(type: String): UInt {
         return when (type) {
@@ -14,6 +16,11 @@ fun main() {
             "comment" -> {
                 commentCounterId += 1U
                 commentCounterId
+            }
+
+            "notes" -> {
+                notesCounterID += 1U
+                notesCounterID
             }
             else -> 0U
         }
@@ -219,5 +226,23 @@ fun main() {
 
     println("Поступили следующие жалобы на комментарии:")
     println(service.reportCommentsArray.contentToString())
+
+    // Создаем заметку Notes
+
+    val note1 = Notes (
+        id = generateId("notes"),
+        title = "First Note",
+        text = "Это моя первая Заметка"
+    )
+
+    val note2 = Notes (
+        id = generateId("notes"),
+        title = "Second Note",
+        text = "Это моя вторая Заметка"
+    )
+
+
+    noteService.notesAdd(note1)
+    noteService.notesAdd(note2)
 
 }
