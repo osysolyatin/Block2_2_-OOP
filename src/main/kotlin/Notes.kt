@@ -15,9 +15,9 @@ data class Notes (
 
     data class Comments (
         val commentId : UInt,
+        val noteId : UInt
             ) {
         val isDeleted: Boolean = false
-        val noteId: UInt = 0u
 
 
     }

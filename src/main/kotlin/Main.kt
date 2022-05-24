@@ -1,10 +1,10 @@
 
 fun main() {
     val service = WallService()
-    val  noteService = NoteService()
     var commentCounterId = 0U
     var postCounterId = 0U
     var notesCounterID = 0U
+    val noteService = Service <Notes> ()
 
     fun generateId(type: String): UInt {
         return when (type) {
@@ -242,7 +242,7 @@ fun main() {
     )
 
 
-    noteService.notesAdd(note1)
-    noteService.notesAdd(note2)
+    noteService.add(note1)
+    noteService.add(note2)
 
 }
