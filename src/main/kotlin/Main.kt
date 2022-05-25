@@ -4,7 +4,8 @@ fun main() {
     var commentCounterId = 0U
     var postCounterId = 0U
     var notesCounterID = 0U
-    val noteService = Service <Notes> ()
+    var commentToNoteId = 0U
+    val noteService = NoteService ()
 
     fun generateId(type: String): UInt {
         return when (type) {
@@ -21,6 +22,11 @@ fun main() {
             "notes" -> {
                 notesCounterID += 1U
                 notesCounterID
+            }
+
+            "commentToNote" -> {
+                commentToNoteId += 1U
+                commentToNoteId
             }
             else -> 0U
         }
@@ -226,23 +232,94 @@ fun main() {
 
     println("Поступили следующие жалобы на комментарии:")
     println(service.reportCommentsArray.contentToString())
+    println()
+
+    println("======================================================")
+    println("Домашнее задание к занятию «3.2. Generics и коллекции»")
+    println("======================================================")
 
     // Создаем заметку Notes
 
     val note1 = Notes (
         id = generateId("notes"),
         title = "First Note",
-        text = "Это моя первая Заметка"
+        text = "Это моя первая Заметка",
+        privacy = Privacy.ALL,
     )
 
     val note2 = Notes (
         id = generateId("notes"),
         title = "Second Note",
-        text = "Это моя вторая Заметка"
+        text = "Это моя вторая Заметка",
+        privacy = Privacy.ONLY_USER,
+    )
+
+    val note3 = Notes (
+        id = generateId("notes"),
+        title = "Third Note",
+        text = "Это моя третья Заметка",
+        privacy = Privacy.FRIENDS_OF_FRIENDS,
     )
 
 
     noteService.add(note1)
     noteService.add(note2)
+    noteService.add(note3)
 
+
+    val commentToNote1 = Notes.Comments (
+        commentId = generateId("commentToNote"),
+        noteId = 1U,
+        message = "Первый комментарий к первой заметке",
+        privacy = Privacy.ALL,)
+
+    val commentToNote2 = Notes.Comments (
+        commentId = generateId("commentToNote"),
+        noteId = 2U,
+        message = "Первый комментарий ко второй заметке",
+        privacy = Privacy.ONLY_USER,)
+
+    val commentToNote3 = Notes.Comments (
+        commentId = generateId("commentToNote"),
+        noteId = 1U,
+        message = "Второй комментарий к первой заметке",
+        privacy = Privacy.ALL,)
+
+    val commentToNote4 = Notes.Comments (
+        commentId = generateId("commentToNote"),
+        noteId = 1U,
+        message = "Третий комментарий к первой заметке",
+        privacy = Privacy.ALL,)
+
+
+    noteService.createComment(commentToNote1)
+    noteService.createComment(commentToNote2)
+    noteService.createComment(commentToNote3)
+    noteService.createComment(commentToNote4)
+    println("\n======== Заметки с комментариями ======== \n")
+    noteService.toPrint()
+
+    // Удаляем второй комментарий к первой заметке
+
+    println("======== Вывод заметок после удаления второго комментария к первой заметке ========\n")
+    noteService.deleteComment(3U)
+    noteService.toPrint()
+
+    // Удаляем третью заметку
+
+    noteService.remove(3U)
+    println("======== Вывод заметок после удаления третьей заметки ========\n")
+    noteService.toPrint()
+
+    // Делаем update текста Второй заметки
+
+    val updateNote2 = Notes (
+        id = 2U,
+        title = "Updated text of second Note",
+        text = "Измененный текст второй заметки",
+        privacy = Privacy.ONLY_USER,)
+
+    noteService.update(updateNote2)
+    println("======== Вывод заметок после Изменения второй заметки ========\n")
+    noteService.toPrint()
 }

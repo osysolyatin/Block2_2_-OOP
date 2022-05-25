@@ -1,20 +1,9 @@
-class Service <T> {
+interface Service <N,C> {
 
-    var notesList = mutableListOf <T>()
-    var commentsList = mutableListOf <T>()
+    fun add (date :N) :Boolean
+    fun createComment (comment: C) :Boolean
+    fun deleteComment (commentId: UInt) : Boolean
+    fun remove (noteId: UInt): Boolean
+    fun update (date: N) : Boolean
 
-    fun add (data: T) {
-        notesList.add(data)
-    }
-
-    fun createComment(comment: T): Boolean {
-        commentsList.add(comment)
-        return true
-        }
-
-    fun deleteComment (comment: T) : UInt {
-        commentsList.find { comment == commentsList}
-        return 1U
-    }
 }
-
